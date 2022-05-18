@@ -92,7 +92,7 @@ import ReminderCalendar from "react-reminder-calendar/dist"
 export default function App (props) {
 
     const [data, setData] = useState([])
-    const {presets, handleOpen} = props
+    const {presets, handleOpen, onItemClick} = props
 
     const normalizeData = () => {
         
@@ -169,7 +169,6 @@ export default function App (props) {
         }
     }
 
-    const handleItemClick = () => {}
 
     const handleRightButtonClick = () => {
         console.log('HELLO')
@@ -187,7 +186,7 @@ export default function App (props) {
             <ReminderCalendar
             shadow
             dateSections={data}
-            onItemClick={handleItemClick}
+            onItemClick={onItemClick}
             onDateSectionRightButtonClick={handleRightButtonClick}
         />
         </div>
