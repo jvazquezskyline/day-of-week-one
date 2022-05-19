@@ -74,7 +74,6 @@ export default function BasicModal({open, setOpen, handleAdd, currentDay, handle
         }
     }, [currentItem])
     
-    console.log('DAYS SELECTED', daysSelected)
     return (
         <div>
       <Modal

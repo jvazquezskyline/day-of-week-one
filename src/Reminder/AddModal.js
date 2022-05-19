@@ -21,6 +21,8 @@ const style = {
 export default function BasicModal({open, setOpen, handleAdd}) {
   const [presetValue, setPresetValue] = React.useState('');
   const [daysSelected, setDaysSelected] = React.useState({});
+  const [colorValue, setColorValue] = React.useState('');
+  const [timeValue, setTimeValue] = React.useState('');
 
   const handleClose = () => {
       setOpen(false);
@@ -36,6 +38,13 @@ export default function BasicModal({open, setOpen, handleAdd}) {
     setPresetValue(event.target.value);
   };
 
+  const handleColorChange = (event) => {
+      setColorValue(event.target.value);
+  }
+
+  const handleTimeChange = (event) => {
+    setTimeValue(event.target.value)
+  }
   const handleDayChange = (event) => {
 
     if (event.target.checked && !daysSelected[event.target.name]) {
@@ -65,7 +74,8 @@ export default function BasicModal({open, setOpen, handleAdd}) {
         title: presetValue,
         id: Math.floor(Math.random() * (100 - 5 + 1) + 5),
         days: days,
-        startTime: 1,
+        startTime: timeValue ? timeValue : 1,
+        separatorColor: colorValue
     }
 
     handleAdd(newPreset)
@@ -88,6 +98,12 @@ export default function BasicModal({open, setOpen, handleAdd}) {
           <Select presetValue={presetValue} handleSelectChange={handleSelectChange} />
 
           <Checkboxes handleChange={handleDayChange} />
+
+          <input type="time" onChange={handleTimeChange}  />
+          <label>Pick Color
+              
+          </label> 
+          <input type="color" onChange={handleColorChange} /> 
           <Button onClick={handleConfirm}>Confirm</Button>
 
         </Box>

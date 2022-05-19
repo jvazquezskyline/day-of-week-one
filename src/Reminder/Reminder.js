@@ -153,7 +153,7 @@ export default function App (props) {
             }
         }
 
-        setData(oldData)
+        // setData(oldData)
 
         return oldData;
     }
@@ -163,28 +163,109 @@ export default function App (props) {
         const newData = [...normalizedPresets];
 
         for (let i = 0; i < newData.length; i++) {
-            newData[i].items.sort((a, b) => a.startTime - b.startTime)
+            // newData[i].items.sort((a, b) => a.startTime - b.startTime)
             // newData[i].items.sort((a, b) => b.startTime - a.startTime)
+            // newData[i].items.sort((a, b) => {
+            //     console.log('A Val: ', a);
+            //     console.log('B val: ', b);
+            //     const [hourA, minutesA] = a.startTime.split(':');
+            //     const [hourB, minutesB] = b.startTime.split(':')
 
+            //     const dateA = new Date ()
+            //     const dateB = new Date ();
+
+            //     const stampA = dateA.setHours(hourA, minutesA, 0);
+            //     const stampB = dateB.setHours(hourB, minutesB, 0);
+
+            //     return stampB - stampA 
+            // })
+
+
+            newData[i].items.sort((a, b) => {
+                const [hourA, minutesA] = a.startTime.split(':');
+                const [hourB, minutesB] = b.startTime.split(':')
+
+
+                if (Number(hourA) > Number(hourB)) {
+                    return 1
+                }
+                if (Number(hourA) < Number(hourB)) {
+                    return -1
+                }
+
+                if (Number(minutesA) > Number(minutesB)) {
+                    return 1
+                }
+
+                if (Number(minutesA) < Number(minutesB)) {
+                    return -1
+                }
+
+                return 0;
+            })
         }
+
+        return newData;
+    }
+
+    const normalizeTime = (sortedPresets) => {
+        const newData = [...sortedPresets];
+
+        for (let i = 0; i < newData.length; i++) {
+            for (let j = 0; j < newData[i].items.length; j++) {
+
+                if (newData[i].items[j].startTime.includes('P.M') || newData[i].items[j].startTime.includes('A.M')) {
+                    continue;
+                }
+                let time = newData[i].items[j].startTime;
+                
+                
+                
+                time = time.split(':')
+
+                let hours = Number(time[0]);
+                let minutes = Number(time[1]);          
+            
+                let timeValue;
+
+                if (hours > 0 && hours <= 12) {
+                    timeValue= "0" + hours;
+                  } else if (hours > 12) {
+                    timeValue= "" + (hours - 12);
+                  } else if (hours == 0) {
+                    timeValue= "12";
+                  }
+
+                timeValue += (minutes < 10) ? ":0" + minutes : ":" + minutes;  // get minutes
+                timeValue += (hours >= 12) ? " P.M." : " A.M.";  // get AM/PM
+
+                newData[i].items[j].startTime = timeValue;
+            }
+        }
+
+        return newData;
     }
 
 
     const handleRightButtonClick = () => {
-        console.log('HELLO')
         handleOpen()
     }
 
     useEffect(() => {
         const normalizedPresets = normalizeData()
 
-        sortPresetsByTime(normalizedPresets);
+        const sortedPresets = sortPresetsByTime(normalizedPresets);
+
+        // const normalizedTimePresets = normalizeTime(sortedPresets);
+        setData(sortedPresets)
+
     }, [presets])
 
     return (
         <div>
             <ReminderCalendar
-            shadow
+
+            shadow={true}
             dateSections={data}
             onItemClick={onItemClick}
             onDateSectionRightButtonClick={handleRightButtonClick}

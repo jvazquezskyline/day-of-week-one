@@ -2,7 +2,7 @@ import React from "react";
 
 import Reminder from "./Reminder"
 
-import Modal from './Modal'
+import Modal from './AddModal'
 
 import DeleteButton from './DeleteButton';
 import UpdateModal from './UpdateModal';
@@ -60,37 +60,35 @@ export default function Main () {
         })
     }
     const [mockPresets, setMockPresets] = React.useState([
-        {
-            title: 'Preset One',
-            startTime: 12,
-            days: ['Monday', 'Wednesday'],
-            id: 1,
+        // {
+        //     title: 'Preset One',
+        //     startTime: 12,
+        //     days: ['Monday', 'Wednesday'],
+        //     id: 1,
 
-        },
-        {
-            title: 'Preset Two',
-            startTime: 11,
-            days: ['Monday', 'Wednesday'],
-            id: 2,
+        // },
+        // {
+        //     title: 'Preset Two',
+        //     startTime: 11,
+        //     days: ['Monday', 'Wednesday'],
+        //     id: 2,
 
-        },
-        {
-            title: 'Preset Three',
-            startTime: 12,
-            days: ['Monday', 'Tuesday'],
-            id: 3,
-        },
+        // },
+        // {
+        //     title: 'Preset Three',
+        //     startTime: 12,
+        //     days: ['Monday', 'Tuesday'],
+        //     id: 3,
+        // },
     ])
 
     const handleItemClick = (day, item) => {
         setUpdateOpen(true);
         setCurrentDay(day);
 
-        // console.log('ITEM:::::: ', item)
         setCurrentItem(item)
 
     }
-    // console.log('PRESETS:::: ', mockPresets)
     const handleAdd = (preset) => {
         setMockPresets((presets) => {
             return [...presets, {...preset}]
