@@ -20,6 +20,7 @@ export default function BasicModal(props) {
   const { selectedPreset, handleClose, open, updatePreset } = props;
 
   const [daysSelected, setDaysSelected] = React.useState({});
+  const [time, setTime] = React.useState('');
 
   const handleDayChange = (event) => {
     if (event.target.checked && !daysSelected[event.target.name]) {
@@ -61,10 +62,28 @@ export default function BasicModal(props) {
       daysToMount.sunday = true;
     }
 
-    console.log('MOUNTY DAYS: ', daysToMount);
     return daysToMount;
   };
 
+  const handleTimeChange = (event) => {
+    setTime(event.target.value);
+  };
+
+  const mountTime = () => {
+    const { hour, min } = selectedPreset.time;
+
+    setTime(`${hour}:${min}`);
+  };
+
+  const normalizeTime = () => {
+    const [hour, min] = time.split(':');
+
+    return {
+      hour,
+      min,
+      sec: 0,
+    };
+  };
   const handleConfirmUpdate = () => {
     try {
       if (Object.keys(daysSelected).length === 0) {
@@ -75,11 +94,19 @@ export default function BasicModal(props) {
       return;
     }
 
+    try {
+      if (time.length === 0) {
+        throw new Error('Must selected a time');
+      }
+    } catch (error) {
+      console.log(error);
+      return;
+    }
+
     const updatedPreset = { ...selectedPreset, ...daysSelected };
 
     // @todo: revise the handling of deleting or making days false when they are deselected
     if (!daysSelected.monday && updatedPreset.monday) {
-      console.log('TRUE');
       delete updatedPreset.monday;
     }
     if (!daysSelected.tuesday && updatedPreset.tuesday) {
@@ -101,6 +128,10 @@ export default function BasicModal(props) {
       delete updatedPreset.sunday;
     }
 
+    const normalizedPreset = normalizeTime();
+
+    updatedPreset.time = normalizedPreset;
+
     updatePreset(updatedPreset);
     handleClose();
   };
@@ -109,6 +140,7 @@ export default function BasicModal(props) {
     const days = mountExistingDays();
 
     setDaysSelected(days);
+    mountTime();
   }, []);
 
   return (
@@ -132,6 +164,12 @@ export default function BasicModal(props) {
           <DayPicker
             handleChange={handleDayChange}
             daysSelected={daysSelected}
+          />
+
+          <input
+            type="time"
+            defaultValue={`${selectedPreset.time.hour}:${selectedPreset.time.min}`}
+            onChange={handleTimeChange}
           />
 
           <hr />
