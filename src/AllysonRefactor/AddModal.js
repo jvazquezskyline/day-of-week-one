@@ -105,7 +105,8 @@ export default function BasicModal(props) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-
+          <Button variant="outlined" onClick={handleClose}>x</Button>
+          <hr />
           <SelectedPresets cameraPresets={cameraPresets} onCameraPresetSelect={setCamerapPreset} cameraPresetSelected={cameraPresetSelected} />
           <br />
            <label>Pick a time:</label> <input type="time" onChange={handleTimeChange} />
@@ -117,6 +118,7 @@ export default function BasicModal(props) {
 
 
             <Button variant="contained" onClick={handleAdd}>Add Preset</Button>
+
 
 
             
