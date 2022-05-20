@@ -1,7 +1,7 @@
 import React from "react";
 
 const dayHeaderStyles = {
-    backgroundColor: 'gray',
+    backgroundColor: '#bfc9c2',
     textAlign: 'center',
     padding: '10px'
 }

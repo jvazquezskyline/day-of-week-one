@@ -5,7 +5,6 @@ import Day from "./Day"
 
 const weekStyles = {
     display: 'flex',
-    justifyContent: 'space-between'
 }
 
 export default function Week (props) {

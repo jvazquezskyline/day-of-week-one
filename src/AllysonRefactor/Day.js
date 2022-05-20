@@ -4,7 +4,8 @@ import DayPresets from "./DayPresets";
 
 
 const dayStyles = {
-    borderRight: '1px solid black'
+    borderRight: '1px solid black',
+    width: '100%',
 }
 
 export default function Day (props) {
