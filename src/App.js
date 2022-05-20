@@ -2,7 +2,7 @@ import {useState} from 'react'
 import logo from './logo.svg';
 import Reminder from './Reminder/index'
 import Tour from './Reminder/Tour'
-import ProtoOne from './AllysonRefactor'
+import ProtoOne from './AllysonRefactor/Tours'
 import './App.css'
 function App() {
   

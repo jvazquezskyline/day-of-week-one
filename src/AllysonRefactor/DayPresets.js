@@ -15,7 +15,6 @@ export default function DayPresets(props) {
   const [isEditingPreset, toggleEditPreset] = useState(false);
   const [selectedPreset, setSelectedPreset] = useState({});
 
-
   return (
     <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
       {isEditingPreset ? (
@@ -36,8 +35,8 @@ export default function DayPresets(props) {
             key={idx}
             className="preset"
             onClick={() => {
-                toggleEditPreset(true)
-                setSelectedPreset(preset)
+              toggleEditPreset(true);
+              setSelectedPreset(preset);
             }}
           >
             <ListItemAvatar>
