@@ -17,7 +17,7 @@ const style = {
 };
 
 export default function BasicModal(props) {
-  const { selectedPreset, handleClose, open, updatePreset } = props;
+  const { selectedPreset, handleClose, open, updatePreset, handleDeletePreset } = props;
 
   const [daysSelected, setDaysSelected] = React.useState({});
   const [time, setTime] = React.useState('');
@@ -152,9 +152,18 @@ export default function BasicModal(props) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
+            <div style={{display: 'flex', justifyContent: 'space-between'}}> 
           <Button variant="outlined" onClick={handleClose}>
             x
           </Button>
+
+          <Button variant="outlined" onClick={() => {
+              handleDeletePreset(selectedPreset.id)
+              handleClose()
+          }} style={{backgroundColor: 'red', color: 'white'}}>
+            Delete
+          </Button>
+            </div>
           <hr />
 
           <Typography id="modal-modal-title" variant="h6" component="h2">

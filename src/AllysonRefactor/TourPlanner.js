@@ -57,6 +57,12 @@ export default function Main({ handleSave, cameraPresets, setCameraPresets }) {
     });
   };
 
+  const handleTourPresetDelete = (newPresets) => {
+      setTour((oldTour) => {
+          return {...oldTour, presets: newPresets}
+      })
+  }
+
   const cleanStateAfterSave = () => {
     setTour({ presets: [] });
   };
@@ -114,6 +120,8 @@ export default function Main({ handleSave, cameraPresets, setCameraPresets }) {
       <Week
         presets={tour.presets ?? []}
         updatePreset={handleUpdateTourPreset}
+        handleDeletePreset={handleTourPresetDelete}
+
       />
 
       {isAddModalOpen ? (

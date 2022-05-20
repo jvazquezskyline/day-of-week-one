@@ -10,10 +10,27 @@ import ImageIcon from '@mui/icons-material/Image';
 import EditModal from './EditModal';
 
 export default function DayPresets(props) {
-  const { presets, day, updatePreset } = props;
+  const { presets, day, updatePreset, handleDeletePreset } = props;
 
   const [isEditingPreset, toggleEditPreset] = useState(false);
   const [selectedPreset, setSelectedPreset] = useState({});
+
+
+  const handleDeleteTourPreset = (presetId) => {
+      const newPresets = JSON.parse(JSON.stringify(presets))
+
+      let i = 0;
+      while (i < newPresets.length) {
+        if (newPresets[i].id === presetId) {
+          newPresets.splice(i, 1);
+        } else {
+          ++i;
+        }
+      }
+
+      handleDeletePreset(newPresets)
+
+  }
 
   return (
     <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
@@ -23,6 +40,7 @@ export default function DayPresets(props) {
           open={isEditingPreset}
           selectedPreset={selectedPreset}
           updatePreset={updatePreset}
+          handleDeletePreset={handleDeleteTourPreset}
         />
       ) : null}
 
