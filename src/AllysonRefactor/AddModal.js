@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import SelectedPresets from './SelectPresets'
+import SelectedPresets from './SelectPresets';
 import DayPicker from './DayPicker';
 
 const style = {
@@ -19,82 +19,75 @@ const style = {
 };
 
 export default function BasicModal(props) {
-
-  const {isAddModalOpen, onClose, cameraPresets, handleAddTourPreset} = props;  
+  const { isAddModalOpen, onClose, cameraPresets, handleAddTourPreset } = props;
   const handleClose = () => onClose(false);
 
   const [cameraPresetSelected, setCamerapPreset] = React.useState({});
   const [time, setTime] = React.useState('');
-  const [daysSelected, setDaysSelected] = React.useState({})
-
+  const [daysSelected, setDaysSelected] = React.useState({});
 
   const handleTimeChange = (event) => {
-      setTime(event.target.value)
-  }
+    setTime(event.target.value);
+  };
 
   const handleDayChange = (event) => {
-
     if (event.target.checked && !daysSelected[event.target.name]) {
-        setDaysSelected((days) => {
-            return {...days, [event.target.name]: event.target.name}
-        })
+      setDaysSelected((days) => {
+        return { ...days, [event.target.name]: true };
+      });
     }
 
     if (!event.target.checked && daysSelected[event.target.name]) {
-        const cloneDays = {...daysSelected};
+      const cloneDays = { ...daysSelected };
 
-        delete cloneDays[event.target.name]
+      delete cloneDays[event.target.name];
 
-        setDaysSelected(cloneDays)
+      setDaysSelected(cloneDays);
     }
-  }
+  };
 
   const normalizeDays = (days) => {
     const normalizedDays = {};
     for (const key in days) {
-        normalizedDays[key] = true
+      normalizedDays[key] = true;
     }
 
     return normalizedDays;
-  }
+  };
 
   /**
-   * 
-   * @param {string} time 
+   *
+   * @param {string} time
    */
   const normalizeTime = (time) => {
-      const [hour, min] = time.split(':');
+    const [hour, min] = time.split(':');
 
-      const normalizedTime = {
-          hour: hour,
-          min: min,
-          sec: 0
-      }
+    const normalizedTime = {
+      hour: hour,
+      min: min,
+      sec: 0,
+    };
 
-      return normalizedTime;
-  }
+    return normalizedTime;
+  };
 
   const handleAdd = () => {
-      if (Object.keys(cameraPresetSelected).length === 0) return;
-      if (time === '' | !time) return;
-      if (Object.keys(daysSelected).length === 0) return;
+    if (Object.keys(cameraPresetSelected).length === 0) return;
+    if ((time === '') | !time) return;
+    if (Object.keys(daysSelected).length === 0) return;
 
-      const normalizedDays = normalizeDays(daysSelected)
-      const normalizedTime = normalizeTime(time);
-      const newPreset = {
-          ...cameraPresetSelected,
-          time: normalizedTime,
-          ...normalizedDays
-    
-      }
+    const normalizedDays = normalizeDays(daysSelected);
+    const normalizedTime = normalizeTime(time);
+    const newPreset = {
+      ...cameraPresetSelected,
+      time: normalizedTime,
+      ...normalizedDays,
+    };
 
-      handleAddTourPreset(newPreset)
+    handleAddTourPreset(newPreset);
 
-      handleClose();
-
-      console.log('NEW PRESET: ', newPreset)
-
-  }
+    handleClose();
+  };
 
   return (
     <div>
@@ -105,23 +98,25 @@ export default function BasicModal(props) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Button variant="outlined" onClick={handleClose}>x</Button>
+          <Button variant="outlined" onClick={handleClose}>
+            x
+          </Button>
           <hr />
-          <SelectedPresets cameraPresets={cameraPresets} onCameraPresetSelect={setCamerapPreset} cameraPresetSelected={cameraPresetSelected} />
+          <SelectedPresets
+            cameraPresets={cameraPresets}
+            onCameraPresetSelect={setCamerapPreset}
+            cameraPresetSelected={cameraPresetSelected}
+          />
           <br />
-           <label>Pick a time:</label> <input type="time" onChange={handleTimeChange} />
-            
-            <br />
-            <br />
-            <label>Select Days of the Week: </label>
-            <DayPicker handleChange={handleDayChange} />
-
-
-            <Button variant="contained" onClick={handleAdd}>Add Preset</Button>
-
-
-
-            
+          <label>Pick a time:</label>{' '}
+          <input type="time" onChange={handleTimeChange} />
+          <br />
+          <br />
+          <label>Select Days of the Week: </label>
+          <DayPicker handleChange={handleDayChange} />
+          <Button variant="contained" onClick={handleAdd}>
+            Add Preset
+          </Button>
         </Box>
       </Modal>
     </div>

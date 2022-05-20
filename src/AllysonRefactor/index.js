@@ -57,6 +57,22 @@ export default function Main( ) {
         })
     }
 
+
+    const handleUpdateTourPreset = (updatedPreset) => {
+        const updatedPresetId = updatedPreset.id;
+
+        setTour((oldTour) => {
+            const updatedTour = {...oldTour};
+
+            for (let i = 0; i < updatedTour.presets.length; i++) {
+                if (updatedTour.presets[i].id === updatedPresetId) {
+                    updatedTour.presets[i] = updatedPreset;
+                }
+            }
+            return updatedTour;
+        })
+    }
+
     // ensures that a new preset's time does not conflict with another one
     const verifyPresetTime = (newPreset, presets) => {
 
@@ -99,7 +115,7 @@ export default function Main( ) {
 
     return (<div>
         <AddButton onClick={openAddModal} />
-        <Week presets={tour.presets ?? []} />
+        <Week presets={tour.presets ?? []} updatePreset={handleUpdateTourPreset} />
         
         {isAddModalOpen ? <AddModal isAddModalOpen={isAddModalOpen} onClose={openAddModal} cameraPresets={cameraPresets} tour={tour}
           handleAddTourPreset={handleAddTourPreset}

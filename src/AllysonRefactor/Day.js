@@ -8,11 +8,11 @@ const dayStyles = {
 }
 
 export default function Day (props) {
-    const {day, presets} = props
+    const {day, presets, updatePreset} = props
     return (
         <div style={dayStyles}>
             <DayHeader day={day} />
-            <DayPresets presets={presets} day={day} />
+            <DayPresets presets={presets} day={day} updatePreset={updatePreset} />
         </div>
     )
 }

@@ -9,14 +9,14 @@ const weekStyles = {
 }
 
 export default function Week (props) {
-    const {presets} = props 
+    const {presets, updatePreset} = props 
     const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
     return (
         <div style={weekStyles}>
 
             {daysOfWeek.map((day, idx) => {
                 return (
-                    <Day key={idx} day={day} presets={presets} />
+                    <Day key={idx} day={day} presets={presets} updatePreset={updatePreset} />
                 )
             })}
         </div>
