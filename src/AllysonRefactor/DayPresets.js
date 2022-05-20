@@ -14,19 +14,6 @@ export default function DayPresets (props) {
 
     const {presets, day} = props;
 
-    // return (
-    //     <div>
-    //         Day Presets
-
-    //         {presets.map((preset, idx) => {
-            
-    //             if (!preset[day.toLowerCase()]) return;
-    //             return (
-    //                 <Preset key={idx} preset={preset} />
-    //             )
-    //         } )}
-    //     </div>
-    // )
 
     return (
         <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
@@ -34,14 +21,16 @@ export default function DayPresets (props) {
         {presets.map((preset, idx) => {
 
             if(!preset[day.toLowerCase()]) return null;
+
+            const {hour, min} = preset.time;
             return (
-          <ListItem>
+          <ListItem key={idx}>
             <ListItemAvatar>
               <Avatar>
                 <ImageIcon />
               </Avatar>
             </ListItemAvatar>
-            <ListItemText primary={preset.name} secondary="Jan 9, 2014" />
+            <ListItemText primary={preset.name} secondary={`${hour}:${min}`} />
           </ListItem>
             )
         })}

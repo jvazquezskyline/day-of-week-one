@@ -66,8 +66,8 @@ export default function BasicModal(props) {
       const [hour, min] = time.split(':');
 
       const normalizedTime = {
-          hour: Number(hour),
-          min: Number(min),
+          hour: hour,
+          min: min,
           sec: 0
       }
 
@@ -75,11 +75,6 @@ export default function BasicModal(props) {
   }
 
   const handleAdd = () => {
-      console.log('CAMERA PRESET SELECTED: ', cameraPresetSelected)
-      console.log('TIME SELECTED: ', time)
-      console.log('DAYS SELECTED: ', daysSelected)
-
-
       if (Object.keys(cameraPresetSelected).length === 0) return;
       if (time === '' | !time) return;
       if (Object.keys(daysSelected).length === 0) return;
