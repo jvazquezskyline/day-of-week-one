@@ -71,6 +71,9 @@ export default function BasicModal(props) {
     return normalizedTime;
   };
 
+  const generateRandomId = (min, max) => {
+    return Math.floor(Math.random() * (max - min + 1) + min)
+  }
   const handleAdd = () => {
     if (Object.keys(cameraPresetSelected).length === 0) return;
     if ((time === '') | !time) return;
@@ -82,6 +85,8 @@ export default function BasicModal(props) {
       ...cameraPresetSelected,
       time: normalizedTime,
       ...normalizedDays,
+      id: generateRandomId(100, 1000),
+      presetId: generateRandomId(100, 1200)
     };
 
     handleAddTourPreset(newPreset);
